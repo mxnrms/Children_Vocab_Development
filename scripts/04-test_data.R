@@ -21,7 +21,7 @@ simulated_vocab_data$child_id |>
   max() == 50
 
 # test 3
-simulated_vocab_data$child_id |>
+simulated_vocab_data$age_months |>
   class() == "integer"
 
 # test 4

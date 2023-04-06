@@ -43,7 +43,8 @@ simulated_vocab_data <-
       size = 200,
       replace = TRUE
     )
-  )
+  ) |> 
+    mutate(age_months = as.integer(age_months))
 
 head(simulated_vocab_data)
 
