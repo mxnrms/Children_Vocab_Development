@@ -1,26 +1,30 @@
 #### Preamble ####
-# Purpose: Cleans.... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Data: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw dataset
+# Author: Aliyah Maxine Ramos
+# Data: 1 April 2023
+# Contact: aliyahmaxine.ramos@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: Must have raw data downloaded.
+# Any other information needed? None.
 
 
 #### Workspace setup ####
 library(tidyverse)
-# [...UPDATE THIS...]
+
 
 #### Clean data ####
-# [...UPDATE THIS...]
-raw_data <- read_csv("inputs/data/raw_data.csv")
+### import raw data ###
+# raw_bychildsummary_data <- read_csv("inputs/data/raw_bychildsummary_data.csv")
+# raw_byASLwordproduce_data <- read_csv("inputs/data/raw_byASLwordproduce_data.csv")
+# raw_byASLwordunderstand_data <- read_csv("inputs/data/raw_byASLwordunderstand_data.csv")
+raw_childbyASLword_data <- read_csv("inputs/data/raw_childbyASLword_data.csv")
 
-
+### select variables of interest ###
+cleaned_vocab_data <-
+  raw_childbyASLword_data |>
+    select(child_id, age, item_definition, category, value)
 
 
 #### Save data ####
-# [...UPDATE THIS...]
-# change cleaned_data to whatever name you end up with at the end of cleaning
-write_csv(cleaned_data, "outputs/data/cleaned_data.csv")
+write_csv(cleaned_vocab_data, "outputs/data/cleaned_vocab_data.csv")
 
