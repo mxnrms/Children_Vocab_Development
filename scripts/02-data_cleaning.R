@@ -27,14 +27,16 @@ cleaned_vocab_data <-
 ### renaming values in variables to be more comprehensible ###
 ## renaming value: 'yes' under variable: value ##
 cleaned_vocab_data$value [cleaned_vocab_data$value == "yes"] <- "understands & produces"
+cleaned_vocab_data$value [cleaned_vocab_data$value == "no"] <- "neither"
 
 ## renaming child id to simple values under variable: child_id ##
-cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58250] <- 1
-cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58251] <- 2
-cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58252] <- 3
-cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58253] <- 4
+cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58253] <- 1
+cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58250] <- 2
+cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58251] <- 3
+cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58252] <- 4
 cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58254] <- 5
 cleaned_vocab_data$child_id [cleaned_vocab_data$child_id == 58255] <- 6
+
 
 #### Save data ####
 write_csv(cleaned_vocab_data, "outputs/data/cleaned_vocab_data.csv")
