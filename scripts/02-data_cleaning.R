@@ -14,9 +14,6 @@ library(tidyverse)
 
 #### Clean data ####
 ### import raw data ###
-# raw_bychildsummary_data <- read_csv("inputs/data/raw_bychildsummary_data.csv")
-# raw_byASLwordproduce_data <- read_csv("inputs/data/raw_byASLwordproduce_data.csv")
-# raw_byASLwordunderstand_data <- read_csv("inputs/data/raw_byASLwordunderstand_data.csv")
 raw_childbyASLword_data <- read_csv("inputs/data/raw_childbyASLword_data.csv")
 
 ### select variables of interest ###
