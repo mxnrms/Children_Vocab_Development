@@ -24,19 +24,19 @@ cleaned_vocab_data <-
   # create column for produced words
   mutate(
     production_ability = case_when(
-      endsWith(value, "produces") ~ "yes",
-      endsWith(value, "understands") ~ "no",
-      endsWith(value, "yes") ~ "yes",
-      endsWith(value, "no") ~ "no"
+      endsWith(value, "produces") ~ "YES",
+      endsWith(value, "understands") ~ "NO",
+      endsWith(value, "yes") ~ "YES",
+      endsWith(value, "no") ~ "NO"
     )
   ) |>
   # create column for comprehended words
   mutate(
     comprehension_ability = case_when(
-      endsWith(value, "produces") ~ "no",
-      endsWith(value, "understands") ~ "yes",
-      endsWith(value, "yes") ~ "yes",
-      endsWith(value, "no") ~ "no"
+      endsWith(value, "produces") ~ "NO",
+      endsWith(value, "understands") ~ "YES",
+      endsWith(value, "yes") ~ "YES",
+      endsWith(value, "no") ~ "NO"
     )
   ) |>
   # renamed column names for better comprehension
