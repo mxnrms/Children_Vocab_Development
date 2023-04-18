@@ -32,7 +32,7 @@ cleaned_vocab_data |>
 # 2 ## each child's amount of produced words ##
 produced_ASL_words <-
   cleaned_vocab_data |>
-  filter(production_ability == "yes")
+  filter(production_ability == "YES")
 
 produced_ASL_words |>
   ggplot(mapping = aes(x = child_id)) +
@@ -47,7 +47,7 @@ produced_ASL_words |>
 # 3 ## each child's amount of produced action words ##
 produced_action_words <-
   cleaned_vocab_data |>
-    filter(production_ability == "yes", item_category == "action_words")
+    filter(production_ability == "YES", item_category == "action_words")
 
 produced_action_words |>
   ggplot(mapping = aes(x = child_id)) +
@@ -62,7 +62,7 @@ produced_action_words |>
 # 4 ## each child's amount of produced time words ##
 produced_time_words <-
   cleaned_vocab_data |>
-    filter(production_ability == "yes", item_category == "time_words")
+    filter(production_ability == "YES", item_category == "time_words")
 
 produced_time_words |>
   ggplot(mapping = aes(x = child_id)) +
@@ -77,7 +77,7 @@ produced_time_words |>
 # 5 ## each child's amount of produced question words ##
 produced_question_words <-
   cleaned_vocab_data |>
-  filter(production_ability == "yes", item_category == "question_words")
+  filter(production_ability == "YES", item_category == "question_words")
 
 produced_question_words |>
   ggplot(mapping = aes(x = child_id)) +
@@ -92,7 +92,7 @@ produced_question_words |>
 # 6 ## each child's amount of produced descriptive words ##
 produced_descriptive_words <-
   cleaned_vocab_data |>
-  filter(production_ability == "yes", item_category == "descriptive_words")
+  filter(production_ability == "YES", item_category == "descriptive_words")
 
 produced_descriptive_words |>
   ggplot(mapping = aes(x = child_id)) +
@@ -108,8 +108,13 @@ produced_descriptive_words |>
 library(modelsummary)
 summary_stats_vocab_data <-
   cleaned_vocab_data |>
+  mutate(
+    vocabulary_item_definition = NULL
+  ) |>
   datasummary_skim(type = "categorical")
 
+# present summary statistics table
+summary_stats_vocab_data
 
 
 

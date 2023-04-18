@@ -21,13 +21,17 @@ vocab_analysis_data <- read_csv("outputs/data/cleaned_vocab_data.csv")
 #### Model data ####
 ## mutating character values under production_ability variable to be numeric values ##
 model_producedASLwords_data <-
-  vocab_analysis_data |>
-  mutate(
-    production_ability = case_when(
-      production_ability == "no" ~ 0,
-      production_ability == "yes" ~ 1
-    )
-  )
+  cleaned_vocab_data |>
+  filter(production_ability == "YES") |>
+  mutate(production_ability = case_when(production_ability == "YES" ~ 1))
+
+#   vocab_analysis_data |>
+#   mutate(
+#     production_ability = case_when(
+#       production_ability == "NO" ~ 0,
+#       production_ability == "YES" ~ 1
+#     )
+#   )
 
 # LINEAR MODEL
 produced_ASLwords_model <-
@@ -58,7 +62,7 @@ modelsummary(produced_ASLwords_model)
 
 
 ### GRAPHS ###
-vocab_analysis_data |>
+model_producedASLwords_data |>
   ggplot(aes(x = age_in_months, y = production_ability)) +
   geom_point(alpha = 0.5) +
   labs(
