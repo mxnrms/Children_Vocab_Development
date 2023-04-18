@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Models the data to provide inferential statistics.
+# Purpose: Models of the data that provide inferential statistics.
 # Author: Aliyah Maxine Ramos
 # Data: 17 April 2023
 # Contact: aliyahmaxine.ramos@mail.utoronto.ca
@@ -10,22 +10,37 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(rstanarm)
+library(modelsummary)
 
 
 #### Read data ####
-# EXAMPLE
-# analysis_data <- read_csv("outputs/data/analysis_data.csv")
-
-# MINE
 vocab_analysis_data <- read_csv("outputs/data/cleaned_vocab_data.csv")
 
 
 #### Model data ####
-# EXAMPLE
-# first_model <-
+## mutating character values under production_ability variable to be numeric values ##
+model_producedASLwords_data <-
+  vocab_analysis_data |>
+  mutate(
+    production_ability = case_when(
+      production_ability == "no" ~ 0,
+      production_ability == "yes" ~ 1
+    )
+  )
+
+# LINEAR MODEL
+produced_ASLwords_model <-
+  lm(
+    production_ability ~ age_in_months,
+    data = model_producedASLwords_data
+  )
+
+# GENERALIZED LINEAR MODELS
+# produced_ASLwords_model_one <-
 #   stan_glm(
-#     formula = flying_time ~ length + width,
-#     data = analysis_data,
+#     formula = production_ability ~ age_in_months,
+#     data = model_producedASLwords_data,
 #     family = gaussian(),
 #     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
 #     prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
@@ -33,29 +48,36 @@ vocab_analysis_data <- read_csv("outputs/data/cleaned_vocab_data.csv")
 #     seed = 853
 #   )
 
-# MINE
-model_producedASLwords_data <-
-  cleaned_vocab_data |>
-  mutate(value = case_when(
-    value == "neither" ~ 0,
-    value == "understands" ~ 1,
-    value == "produces" ~ 2,
-    value == "understands & produces" ~ 3
-  ))
+## summary
+# LINEAR MODEL
+summary(produced_ASLwords_model)
+modelsummary(produced_ASLwords_model)
+# GENERALIZED LINEAR MODELS
+# summary(produced_ASLwords_model_one)
+# modelsummary(produced_ASLwords_model_one)
 
-produced_ASL_words_model <-
-  lm(
-    value ~ age,
-    data = model_producedASLwords_data
-  )
 
-summary(produced_ASL_words_model)
+### GRAPHS ###
+vocab_analysis_data |>
+  ggplot(aes(x = age_in_months, y = production_ability)) +
+  geom_point(alpha = 0.5) +
+  labs(
+    x = "age",
+    y = "production ability"
+  ) +
+  theme_classic()
 
 
 #### Save model ####
-# EXAMPLE
+# LINEAR MODEL
+saveRDS(
+  produced_ASLwords_model,
+  file = "outputs/models/produced_ASLwords_model.rds"
+)
+# GENERALIZED LINEAR MODELS
 # saveRDS(
-#   first_model,
-#   file = "outputs/models/first_model.rds"
+#   produced_ASLwords_model_one,
+#   file = "outputs/models/produced_ASLwords_model_one.rds"
 # )
+
 
