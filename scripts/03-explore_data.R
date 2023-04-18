@@ -11,6 +11,7 @@
 #### Workspace setup ####
 library(tidyverse)
 library(broom)
+library(modelsummary)
 
 
 #### Explore data ####
@@ -103,24 +104,12 @@ produced_descriptive_words |>
   )
 
 
-
-### MODEL ###
-model_producedASLwords_data <-
+# 7 ## summary statistics table
+library(modelsummary)
+summary_stats_vocab_data <-
   cleaned_vocab_data |>
-    mutate(value = case_when(
-      value == "neither" ~ 0,
-      value == "understands" ~ 1,
-      value == "produces" ~ 2,
-      value == "understands & produces" ~ 3
-    ))
+  datasummary_skim(type = "categorical")
 
-produced_ASL_words_model <-
-  lm(
-    value ~ age,
-    data = model_producedASLwords_data
-  )
-
-summary(produced_ASL_words_model)
 
 
 
