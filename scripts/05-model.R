@@ -19,6 +19,86 @@ vocab_analysis_data <- read_csv("outputs/data/cleaned_vocab_data.csv")
 
 
 #### Model data ####
+## simulated code
+set.seed(853)
+
+number_of_observations <- 200
+expected_relationship <- 8.3
+early_age <- 12
+age_threshhold <- 36
+
+sim_vocab_data_model <-
+  tibble(
+    age_in_months = runif(
+      n = number_of_observations,
+      min = early_age,
+      max = age_threshhold
+    ),
+    noise = rnorm(n = number_of_observations, mean = 0, sd = 20),
+    prod_words = age_in_months * expected_relationship + noise
+  ) |>
+  mutate(
+    age_in_months = round(x = age_in_months, digits = 1),
+    prod_words = round(x = prod_words, digits = 1)
+  ) |>
+  select(-noise)
+
+sim_vocab_data_model
+
+# panel a
+sim_vocab_data_model |>
+  ggplot(aes(x = age_in_months, y = prod_words)) +
+  geom_point(alpha = 0.5) +
+  labs(
+    x = "age",
+    y = "words produced"
+  ) +
+  theme_classic()
+
+# panel b
+sim_vocab_data_model |>
+  ggplot(aes(x = age_in_months, y = prod_words)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = "black",
+    linetype = "dashed",
+    formula = "y ~ x"
+  )
+  labs(
+    x = "age",
+    y = "words produced"
+  ) +
+  theme_classic()
+  
+# panel c
+  sim_vocab_data_model |>
+    ggplot(aes(x = age_in_months, y = prod_words)) +
+    geom_point(alpha = 0.5) +
+    geom_smooth(
+      method = "lm",
+      se = TRUE,
+      color = "black",
+      linetype = "dashed",
+      formula = "y ~ x"
+    )
+  labs(
+    x = "age",
+    y = "words produced"
+  ) +
+    theme_classic()
+  
+sim_vocab_data_model_true <-
+  lm(
+    prod_words ~ age_in_months,
+    data = sim_vocab_data_model
+  )
+
+summary(sim_vocab_data_model_true)
+modelsummary(sim_vocab_data_model_true)
+
+
 ## mutating character values under production_ability variable to be numeric values ##
 model_producedASLwords_data <-
   cleaned_vocab_data |>
