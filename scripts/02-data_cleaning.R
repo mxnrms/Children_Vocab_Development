@@ -25,7 +25,7 @@ cleaned_vocab_data <-
   mutate(
     production_ability = case_when(
       endsWith(value, "produces") ~ "YES",
-      endsWith(value, "understands") ~ "NO",
+      endsWith(value, "understands") ~ "YES",
       endsWith(value, "yes") ~ "YES",
       endsWith(value, "no") ~ "NO"
     )

@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Models of the data that provide inferential statistics.
+# Purpose: Models of the data to generate inferential statistics.
 # Author: Aliyah Maxine Ramos
 # Data: 17 April 2023
 # Contact: aliyahmaxine.ramos@mail.utoronto.ca
@@ -19,21 +19,24 @@ vocab_analysis_data <- read_csv("outputs/data/cleaned_vocab_data.csv")
 
 
 #### Model data ####
-## simulated code
+## creating simulated data for the model
 set.seed(853)
 
 number_of_observations <- 200
+# calculated (linear slope relationship) from known independent and dependent values
 expected_relationship <- 8.3
+# age_in_months minimum
 early_age <- 12
-age_threshhold <- 36
+# age_in_months maximum
+age_limit <- 36
 
-sim_vocab_data_model <-
+sim_prod_data <-
   tibble(
-    age_in_months = runif(
+    age_in_months = floor(runif(
       n = number_of_observations,
       min = early_age,
-      max = age_threshhold
-    ),
+      max = age_limit
+    )),
     noise = rnorm(n = number_of_observations, mean = 0, sd = 20),
     prod_words = age_in_months * expected_relationship + noise
   ) |>
@@ -43,10 +46,11 @@ sim_vocab_data_model <-
   ) |>
   select(-noise)
 
-sim_vocab_data_model
+# present 
+sim_prod_data
 
 # panel a
-sim_vocab_data_model |>
+sim_prod_data |>
   ggplot(aes(x = age_in_months, y = prod_words)) +
   geom_point(alpha = 0.5) +
   labs(
@@ -56,7 +60,7 @@ sim_vocab_data_model |>
   theme_classic()
 
 # panel b
-sim_vocab_data_model |>
+sim_prod_data |>
   ggplot(aes(x = age_in_months, y = prod_words)) +
   geom_point(alpha = 0.5) +
   geom_smooth(
@@ -65,7 +69,7 @@ sim_vocab_data_model |>
     color = "black",
     linetype = "dashed",
     formula = "y ~ x"
-  )
+  ) +
   labs(
     x = "age",
     y = "words produced"
@@ -73,95 +77,38 @@ sim_vocab_data_model |>
   theme_classic()
   
 # panel c
-  sim_vocab_data_model |>
-    ggplot(aes(x = age_in_months, y = prod_words)) +
-    geom_point(alpha = 0.5) +
-    geom_smooth(
-      method = "lm",
-      se = TRUE,
-      color = "black",
-      linetype = "dashed",
-      formula = "y ~ x"
-    )
+sim_prod_data |>
+  ggplot(aes(x = age_in_months, y = prod_words)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(
+    method = "lm",
+    se = TRUE,
+    color = "black",
+    linetype = "dashed",
+    formula = "y ~ x"
+  ) +
   labs(
     x = "age",
     y = "words produced"
   ) +
-    theme_classic()
+  theme_classic()
   
-sim_vocab_data_model_true <-
+sim_prod_vocab_model <-
   lm(
     prod_words ~ age_in_months,
-    data = sim_vocab_data_model
+    data = sim_prod_data
   )
 
-summary(sim_vocab_data_model_true)
-modelsummary(sim_vocab_data_model_true)
+summary(sim_prod_vocab_model)
+modelsummary(sim_prod_vocab_model)
 
-
-## mutating character values under production_ability variable to be numeric values ##
-model_producedASLwords_data <-
-  cleaned_vocab_data |>
-  filter(production_ability == "YES") |>
-  mutate(production_ability = case_when(production_ability == "YES" ~ 1))
-
-#   vocab_analysis_data |>
-#   mutate(
-#     production_ability = case_when(
-#       production_ability == "NO" ~ 0,
-#       production_ability == "YES" ~ 1
-#     )
-#   )
-
-# LINEAR MODEL
-produced_ASLwords_model <-
-  lm(
-    production_ability ~ age_in_months,
-    data = model_producedASLwords_data
-  )
-
-# GENERALIZED LINEAR MODELS
-# produced_ASLwords_model_one <-
-#   stan_glm(
-#     formula = production_ability ~ age_in_months,
-#     data = model_producedASLwords_data,
-#     family = gaussian(),
-#     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
-#     prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
-#     prior_aux = exponential(rate = 1, autoscale = TRUE),
-#     seed = 853
-#   )
-
-## summary
-# LINEAR MODEL
-summary(produced_ASLwords_model)
-modelsummary(produced_ASLwords_model)
-# GENERALIZED LINEAR MODELS
-# summary(produced_ASLwords_model_one)
-# modelsummary(produced_ASLwords_model_one)
-
-
-### GRAPHS ###
-model_producedASLwords_data |>
-  ggplot(aes(x = age_in_months, y = production_ability)) +
-  geom_point(alpha = 0.5) +
-  labs(
-    x = "age",
-    y = "production ability"
-  ) +
-  theme_classic()
 
 
 #### Save model ####
 # LINEAR MODEL
 saveRDS(
-  produced_ASLwords_model,
-  file = "outputs/models/produced_ASLwords_model.rds"
+  sim_prod_vocab_model,
+  file = "outputs/models/sim_prod_vocab_model.rds"
 )
-# GENERALIZED LINEAR MODELS
-# saveRDS(
-#   produced_ASLwords_model_one,
-#   file = "outputs/models/produced_ASLwords_model_one.rds"
-# )
 
 

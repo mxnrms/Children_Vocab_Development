@@ -109,7 +109,13 @@ library(modelsummary)
 summary_stats_vocab_data <-
   cleaned_vocab_data |>
   mutate(
-    vocabulary_item_definition = NULL
+    vocabulary_item_definition = NULL,
+    item_category = NULL,
+    overall_assessment = NULL
+  ) |>
+  rename(
+    "Production Ability" = production_ability,
+    "Comprehension Ability" = comprehension_ability
   ) |>
   datasummary_skim(type = "categorical")
 
