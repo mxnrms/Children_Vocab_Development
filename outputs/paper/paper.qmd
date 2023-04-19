@@ -39,7 +39,7 @@ cleaned_vocab_data <- read.csv(here::here("outputs/data/cleaned_vocab_data.csv")
 
 American Sign Language (ASL) allows for communication and interaction with the community of people who are deaf or have hearing disabilities. This makes sign language an essential tool for inclusivity and accessibility. Learning ASL enables those with hearing impairments to participate in society just like any other abled person. The ability to communicate with others through ASL can help diminish communication barriers and help create more inclusive environments for all. And learning languages is best at early stages of life.
 
-In this paper, we investigate the patterns and trends that occur during the early developmental years of childhood in terms of vocabulary in American Sign Language. The estimand that we are trying to estimate is the relationship between children's developmental ages and their production of vocabulary words in American Sign Language. We aimed to visualize the milestones for children's vocabulary development in sign language to compare it to the timeline of vocabulary development for speech-language. This paper uses data obtained from the open database, Wordbank, which exhibits information on the development of children's vocabulary in various languages. The dataset, "Full Child-by-Word", available on this database, provides information on the demographic details of each child when provided as well as the variables presenting their vocabulary assessment.
+In this paper, we investigate the patterns and trends that occur during the early developmental years of childhood in terms of vocabulary in American Sign Language. The estimand that we are trying to estimate is the number of vocabulary words in American Sign Language that a child can produce at a given developmental age. We aimed to visualize the milestones for children's vocabulary development in sign language to compare it to the timeline of vocabulary development for speech-language. This paper uses data obtained from the open database, Wordbank, which exhibits information on the development of children's vocabulary in various languages. The dataset, "Full Child-by-Word", available on this database, provides information on the demographic details of each child when provided as well as the variables presenting their vocabulary assessment.
 
 With our focus on the development of American Sign Language vocabulary, we found that children learning to communicate a visual language share similar trends in vocabulary development to those that are learning a spoken language. We were also interested in how children develop this natural language at an early age and the differences in comprehension and production between different vocabulary terms. The findings in this paper highlight the importance of learning American Sign Language at an early age because it allows those with hearing disabilities to experience a more accessible world. The importance of learning American Sign Language at an early age is emphasized as it provides the ability for those with hearing impairments or disabilities to participate in society like any other able-bodied individual. It acknowledges how the world often caters to able-bodied members of society, making things less accessible for the deaf and hard-of-hearing community. By understanding the cognitive processes involved in learning a visual language, we are better able to support individuals in their language acquisition.
 
@@ -55,7 +55,7 @@ The remainder of this paper is structured as follows: @sec-data introduces the d
 
 ```{r}
 #| label: fig-fullchildbyword
-#| fig-cap: Child's By American Sign Language (ASL) Word Overall Asseessment
+#| fig-cap: Each child's overall assessment by American Sign Language (ASL) word, with their identification number arranged in ascending order of age.
 #| echo: false
 #| warning: false
 
@@ -72,9 +72,11 @@ cleaned_vocab_data |>
 
 ```
 
-Discuss.
+Discuss @fig-fullchildbyword.
 
 ```{r}
+#| label: tbl-sumstats
+#| tbl-cap: Summary statistics table of the children's ASL vocabulary assessment.
 #| echo: false
 
 ## summary statistics table
@@ -95,11 +97,11 @@ summary_stats_vocab_data <-
 summary_stats_vocab_data
 ```
 
-Discuss.
+Discuss @tbl-sumstats.
 
 ```{r}
 #| label: fig-childbywordprod
-#| fig-cap: Child's Amount of Produced ASL Words
+#| fig-cap: Each child's amount of produced ASL words, with their identification number arranged in ascending order of age.
 #| echo: false
 #| warning: false
 
@@ -119,14 +121,14 @@ produced_ASL_words |>
 
 ```
 
-Discuss.
+Discuss @fig-childbywordprod.
 
 # Model {#sec-model}
 
 ```{r}
 #| include: false
 
-# READ MODEL INTO QUARTO DOCUMENT
+# IMPORT MODEL FROM OUTPUTS FOLDER
 prod_vocab_model <- readRDS(here::here("outputs/models/sim_prod_vocab_model.rds"))
 
 ```
@@ -150,7 +152,7 @@ In Model \@ref(eq:1):
 
 ```{r}
 #| label: fig-prodwordsmodel
-#| fig-cap: Linear Model of Produced Words by Children Ages
+#| fig-cap: Linear model of produced ASL words by children ages.
 #| echo: false
 #| warning: false
 
@@ -172,13 +174,17 @@ prod_vocab_model |>
 
 ```
 
-Discuss.
+Discuss @fig-prodwordsmodel.
 
 ```{r}
+#| label: tbl-prodvocabmodelsum
+#| tbl-cap: Model summary of produced words by children ages.
 #| echo: false
 
 modelsummary(prod_vocab_model)
 ```
+
+Discuss @tbl-prodvocabmodelsum.
 
 Our results are summarized in TABLEX.
 
