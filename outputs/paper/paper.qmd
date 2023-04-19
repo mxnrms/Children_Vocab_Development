@@ -169,6 +169,7 @@ prod_vocab_model |>
     y = "Number of ASL Words Produced"
   ) +
   theme_classic()
+
 ```
 
 Discuss.
