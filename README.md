@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains a paper that investigates the vocabulary development, specifically their production ability of vocabulary items, of children during their early years of life in American Sign Language. In this paper, I constructed a model to predict the amount of vocabulary items that a child can produce at a given age. The dataset about children's assessment of their vocabulary development throughout their ages, expressed in months, is available on the open database, [Wordbank](http://wordbank.stanford.edu/).
+This repository contains a paper that investigates the vocabulary development, specifically their production ability of vocabulary items, of children during their early years of life in American Sign Language. In this paper, I constructed a model to predict the amount of vocabulary items that a child can produce at a given age. The data used in this paper, about children's assessment of their vocabulary development throughout their ages, expressed in months, is available on the open database, [Wordbank](http://wordbank.stanford.edu/).
 
 ## File Structure
 
