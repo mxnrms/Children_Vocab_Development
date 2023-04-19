@@ -1,16 +1,28 @@
-# Starter folder
+# Investigating Children's Vocabulary Development in American Sign Language
 
 ## Overview
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
-
-To use this folder, click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit.
+This repository contains a paper that investigates the vocabulary development, specifically their production ability of vocabulary items, of children during their early years of life in American Sign Language. The dataset about children's assessment of their vocabulary development throughout their ages, expressed in months, is available on the open database, [Wordbank](http://wordbank.stanford.edu/).
 
 ## File Structure
 
 The repo is structured as:
 
 -   `input/data` contains the data sources used in analysis including the raw data.
--   `outputs/data` contains the cleaned dataset that was constructed.
--   `outputs/paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
--   `scripts` contains the R scripts used to simulate, download and clean data.
+-   `outputs` contains the following folders and its contents:
+    -   `/data` contains the cleaned data that was constructed.
+    -   `/models` contains the linear regression model that was constructed.
+    -   `/paper` contains the files used to generate the final paper, including the Quarto document and the reference bibliography file, as well as the PDF document of the paper.
+-   `scripts` contains the R scripts used to simulate, test, download, clean data, explore data, and model.
+
+## How To: Generate the Paper
+
+-   Click the green "Code" button.
+
+-   Click "Download ZIP".
+
+-   Move the downloaded folder to where you want to work on your own computer.
+
+-   Modify it to suit.
+
+Good luck! 🍀
