@@ -1,6 +1,6 @@
 ---
 title: "Children’s Vocabulary Development in American Sign Language"
-subtitle: "Similar Trends between Developing Vocabulary for Sign Language and Speech Language"
+subtitle: "Similar Trends Between Developing Vocabulary Production for Sign Language and Speech Language"
 author: Aliyah Maxine Ramos
 thanks: "Code and data are available at: https://github.com/mxnrms/Children_Vocab_Development.git."
 date: "`r Sys.time()`"
@@ -47,11 +47,19 @@ The remainder of this paper is structured as follows: @sec-data introduces the d
 
 # Data {#sec-data}
 
-## Overview of Data {#sec-overview-of-data}
-
 ## Data Source {#sec-variables-of-interest}
 
+The data utilized in this paper concentrates on the vocabulary growth of children, which is accessible in several languages through the open database, Wordbank [@citewordbank]. At present, Wordbank contains data concerning children's vocabulary development in 29 different languages, covering age groups from as early as 12 months to 36 months. The data source, Wordbank, employs open-source tools to offer openly available data to the public, which can be downloaded for free from both its website and GitHub repository. The primary entities of the Wordbank repository consist of the instrument, which refers to the survey or questionnaire form, and the item, which refers to a specific question in the instrument, along with the administration, unique child, and the language.
+
+The data collection process of the database includes parent reports, naturalistic observation, and experimental testing. The primary method of sampling used to collect data is through convenience sampling. This method has been shown to provide samples with a significantly diverse demographic makeup. The online parent report survey is the most used method for understanding children's language vocabulary development due to its low cost and wide reach, exceeding the sample size typically attained through naturalistic observation or experimental tests. Parent reports also utilize the extensive knowledge of parents or primary caregivers about their child's behaviour, enabling more comprehensive research than what a researcher alone can obtain. These reports are useful in providing assessments of children's development during the critical age range when language begins to emerge until around 30 months of age. The vocabulary lists used in assessing children's development present the variation in development across various ages and abilities based on words that the child can comprehend or comprehend and produce, as determined by the parent. The bank of words includes both semantic and syntactic categories, providing a comprehensive list of terms that most children will know.
+
+The analysis of this paper makes use of the R programming language [@citeR] for statistical computations and visualizing data. The tidyverse package [@citetidyverse] is installed to gain access to other important R packages, including the dplyr package [@citedplyr] manipulate and clean data, the readr package [@citereadr] to read and import data, the here package [@citehere] to create a path to specific saved files, the ggplot2 package [@citeggplot2] to create the data visualizations, and the modelsummary package [@citemodelsummary] to create ready-made summary tables.
+
 ## Variables of Interest
+
+Our analysis is specifically interested in investigating the production of vocabulary words in American Sign Language. In this paper, we use a dataset focused solely on American Sign Language that is comprised of 3366 observations, where each row represents an evaluation of a child and each column indicates a specific variable, which could be a demographic factor or a response from the parent regarding a particular item [@citedatasetwordbank]. Moreover, this paper focuses on the analysis of several variables, including the unique identification number of the child, their age in months, the specific vocabulary item they are being assessed on, the item's category, and the overall assessment of their ability to understand and/or produce the vocabulary item. It is important to note that the 3366 available observations from the data on learning American Sign Language were collected for only six unique children.
+
+\newpage
 
 ```{r}
 #| label: fig-fullchildbyword
@@ -72,7 +80,11 @@ cleaned_vocab_data |>
 
 ```
 
-Discuss @fig-fullchildbyword.
+The vocabulary development of children in American Sign Language is presented in @fig-fullchildbyword, providing an overview of their overall assessment. Possible assessments for the child's language abilities include understanding the item, being able to understand and produce the item, the inability to understand or produce the item, or the assessment report not being applicable. Notably, according to the database, children who can produce a vocabulary item are also inferred to understand it as well. Additionally, this graph provides a visual representation of each child's abilities, with their identification number arranged in ascending order according to age.
+
+At 12 months old, the youngest child (Child 1) primarily comprehends a few ASL words and produces only a limited number. In contrast, the next child in age (18 months old) is capable of producing a greater number of items. A similar trend is observed for Child 3 (21 months old) as they are able to understand a greater amount of ASL vocabulary items and produce a slightly higher number than the previous child. In comparison to Child 3, the data on Child 4 (28 months old) indicates a significant increase in production capabilities. As we move to Child 5 (32 months old) and Child 6 (33 months old), they exhibit the ability to produce more items than they are only able to comprehend. However, it is important to note that these two children have a higher number of not applicable (NA) responses in comparison to Child 3 and Child 4. The limitations of these NA responses are discussed in @sec-weaknesses of this paper.
+
+\newpage
 
 ```{r}
 #| label: tbl-sumstats
@@ -97,7 +109,9 @@ summary_stats_vocab_data <-
 summary_stats_vocab_data
 ```
 
-Discuss @tbl-sumstats.
+The summary statistics of the total ASL vocabulary items produced and comprehended across the 3366 observations by the six unique children learning ASL are presented in @tbl-sumstats. In this table, the production ability category comprises items that children were capable of both comprehending and producing. Conversely, the comprehension ability category includes items that the children were only able to understand and not produce. Within this table, the "N" column represents the total number of observations for each variable, while the "%" column displays the percentage proportion of children for each given variable. Notably, more than 50 percent of the observations show a vocabulary item that was both understood and produced by a child. Additionally, about 30 percent of the observations indicate the number of ASL vocabulary items that children were able to comprehend but did not produce. Moreover, approximately 40 percent of the observations had NA responses for the children's vocabulary development assessment.
+
+\newpage
 
 ```{r}
 #| label: fig-childbywordprod
@@ -121,7 +135,7 @@ produced_ASL_words |>
 
 ```
 
-Discuss @fig-childbywordprod.
+@fig-childbywordprod focuses on production ability, displaying each child's total number of ASL vocabulary items that they are able to comprehend and produce. Notably, the identification number for each child is organized in ascending order based on their age. From this graph, we can observe a negative skewness pattern where the graph is skewed to the left, indicating a gradual increase at the start of the graph and a significant increase as the graph moves toward the center. The data visualization demonstrates that the age of the child that had the least amount of vocabulary items produced is 12 months old (Child 1). Contrastingly, Child 3 (21 months old) and Child 4 (28 months old) have the highest number of ASL vocabulary items produced. Near the end of the graph, where the children with higher ages (32 months and 33 months old) lie, there is a slight decline in the number of produced ASL vocabulary items in comparison to the two former children.
 
 # Model {#sec-model}
 
@@ -133,20 +147,28 @@ prod_vocab_model <- readRDS(here::here("outputs/models/sim_prod_vocab_model.rds"
 
 ```
 
-We estimate the following model:
+Through the data analysis of this paper, we discovered that there is a correlation between a child's age and the number of American Sign Language vocabulary items that they are able to produce, which has implications for their overall vocabulary development in ASL. To further analyze and infer the timeline at which children can produce a certain number of vocabulary words in sign language, we constructed a linear regression model.
+
+Thus, we estimate the following model:
 
 ```{=tex}
 \begin{equation}
-Y_{i} = \beta_{0}+\beta_{1}Age_{i} (\#eq:1)
+Y_{i} = \beta_{0}+\beta_{1}Age_{i}
 \end{equation}
 ```
-In Model \@ref(eq:1):
+In Model 1:
 
--   $Y$ is ...
--   $\beta_{0}$ is ...
--   $\beta_{1}$ is ...
+-   $Y_{i}$ is the change in the number of produced ASL vocabulary items for each additional month of age, given every one unit change in age.
+-   $\beta_{0}$ is the coefficient for intercept.
+-   $\beta_{1}$ is the coefficient for the rate at which the number of produced ASL vocabulary items changes with respect to age in months.
+
+The independent variable of the model is the age of the child, measured in months. The dependent variable is the number of ASL vocabulary items that the child is able to produce.
 
 ## Model Justification
+
+We anticipate that the development of vocabulary word production, whether it be for a speech language or a visual language, would be close to linear. This is because we assume that as a child gets older in age, their cognitive abilities improve, leading to an increased ability to produce more vocabulary words. Before building the model, we estimate the relationship between the number of produced vocabulary items (dependent variable) and age in months (independent variable) using the known values of these variables. These values were obtained from @fig-childbywordprod, specifically for Child 2 and Child 3, whose ages are 18 months and 21 months respectively. The reason for calculating the relationship between the number of produced vocabulary items and age in months based on Child 2 and Child 3 is that they are the closest in age to each other. We chose to exclude Child 5 and Child 6, who is 32 months and 33 months old, respectively, when considering which known values to calculate because they are close to the age boundaries at which children are able to engage in face-to-face activities, typically around 30 months old. Therefore, it is more reasonable to estimate the relationship based on the rate of the change between Child 2 and Child 3, as they fall within the crucial age range when language emergence is common. Additionally, since the available data on vocabulary development in American Sign Language only involved six unique children and their ages, we simulated additional data to fill in the gaps. Since we needed data that spanned the spectrum of ages between 12 months to 36 months old, we used the simulated data and the estimated relationship previously mentioned to generate inferential statistics by using the model.
+
+\newpage
 
 # Results {#sec-results}
 
@@ -174,7 +196,9 @@ prod_vocab_model |>
 
 ```
 
-Discuss @fig-prodwordsmodel.
+Model 1, as illustrated in @fig-prodwordsmodel, displays the correlation between a child's age in months and the number of ASL words they can produce at a given age. The scatterplot depicts the general trend of vocabulary growth as a child grows in age, further emphasized by the regression line. The model indicates that as the age of a child increases, the number of vocabulary items that that child produces increases as well. The regression line allows for the prediction of future outcomes based on the known data available from the dataset. By utilizing this model, we can estimate when a child will be able to produce a certain number of ASL vocabulary words or phrases at a certain age.
+
+\newpage
 
 ```{r}
 #| label: tbl-prodvocabmodelsum
@@ -184,31 +208,33 @@ Discuss @fig-prodwordsmodel.
 modelsummary(prod_vocab_model)
 ```
 
-Discuss @tbl-prodvocabmodelsum.
-
-Our results are summarized in TABLEX.
+@tbl-prodvocabmodelsum shows the coefficients of the predictor variables of Model 1. We are concerned with the top half of this table, as it provides the values of the coefficient representing the intercept as well as the coefficient representing the rate at which the number of produced ASL vocabulary items changes with respect to age in months. The standard errors of the estimated coefficients are also included in brackets. This is also provided visually in @fig-prodwordsmodel by the means of the grey area surrounding the regression line, presenting the degree of error in the prediction. As seen in @fig-prodwordsmodel, there is no intercept in the model. Under these circumstances, the intercept can be disregarded, as there is no value of 0 within the range of the independent variable, age in months. The spectrum of months explored in this model is between the early age of 12 months old to 36 months old. It is important to note that we specify the estimated relationship between the independent variable and the dependent variable. We, therefore, took our estimated relationship to the available data in order to estimate the coefficients of the model. Hence why the coefficient value for age_in_months is close to our estimated relationship value.
 
 # Discussion {#sec-discussion}
 
-## First discussion point {#sec-first-point}
+## Learning sign language, especially at an early age, creates a more accessible world for the deaf and hard-of-hearing community {#sec-first-point}
 
-## Second discussion point {#sec-second-point}
+Learning sign language at an early age expands children\'s understanding of diverse individuals and communities, fostering their ability to be more empathetic and accommodating towards accessibility. Being able to communicate through sign languages, such as American Sign Language, provides more accessible and effective opportunities for individuals who are deaf or hard of hearing [@cite1whatisASL]. Sign language is a highly accessible form of communication that enables individuals with hearing impairments to engage in conversations on equal grounds with others, ultimately accommodating diversity and universal inclusion.
 
-## Third discussion point {#sec-third-point}
+## Learning multiple languages, including sign language, at an early age is mentally and socially beneficial {#sec-second-point}
+
+The timeline of language development for speech languages during the emerging years of children has a similar growth trend to the data analysis in this paper, with a more significant upward trend. o   While children learning to speak a spoken language are able to produce their first words between the ages of 6 to 11 months old [@cite2speechmilestones], those learning to communicate through sign language produce one-word vocabulary by the age of 12 months [@cite3signmilestones]. Afterwards, they both follow the same trend of producing 2-word phrases around the ages of 18 to 24 months old and by 2-3 years of age, they are able to use 3-word phrases. These highlighted milestones indicate that the vocabulary development of spoken languages shows a similar linear growth trend to the vocabulary development of sign languages.
+
+Early learning of sign language is beneficial as it helps children have a better comprehension of the language while simultaneously improving their cognitive and social development. Research suggests that the early years of a child\'s life are the most crucial in terms of the development of their language skills [@cite1whatisASL]. Teaching children sign language, whether they are experiencing hearing loss or are able to communicate via speech, can have a positive impact on their language development as well as their social interactions and relationships. Children at early ages have the capability to learn multiple languages at a time without confusion or any sort of delay in their development, as research has shown that their brains are able to handle dual language development [@cite4signengbilingual]. They are able to expand their communication and linguistic skills as well as provide access to a language that meets the needs of deaf individuals.
+
+## Learning sign language enhances visual skills and improves cognitive abilities {#sec-third-point}
+
+Expanding on the cognitive and social benefits that coincide with the development of sign languages in children, it also enables children to enhance their visual skills and cognitive abilities. Sign languages allow children to communicate and express themselves effectively. For instance, when a child is unsure of a sign in the language, they are able to work around this barrier by using the letters of the alphabet to express what they are trying to say [@cite5signbenefits]. Additionally, because sign language involves the physical movement of the body, the use of muscle memory helps increase a child\'s vocabulary [@cite5signbenefits]. It helps perform words automatically without conscious effort or attention, demonstrating a retained memory of vocabulary. Alongside movement, sign languages are also visual languages. This helps in enhancing the visual learning experience of children during their developmental stages [@cite5signbenefits]. With this, they are able to see words in motion and retain both the motion of the word or phrase and the vocabulary word itself.
 
 ## Weaknesses & Next Steps {#sec-weaknesses-next-steps}
 
 ### Weaknesses {#sec-weaknesses}
 
+The limitations of using data from Wordbank are that its primary focus is on typical development and its datasets focus on monolingual acquisition. In addition, the sample of languages is restricted by data accessibility. Additionally, there are a lot of NA responses within the dataset. This invites the problem of missing data, which can reduce the sample size and have an overall reduced statistical power. Missing data could also introduce bias into the analysis, especially with the main data collection being the survey reports from parents or primary caregivers. This can affect the representativeness of the sample. Moreover, due to the limited number of unique children for the data on American Sign Language development, a large number of observations had to be simulated for the model and its analysis.
+
 ### Next Steps {#sec-next-steps}
 
-\newpage
-
-\appendix
-
-# Appendix {.unnumbered}
-
-# Additional details {#sec-additional-details}
+A possible next step could be to explore how different categories of vocabulary words are developed over the age range and their varying levels of comprehension and production. With that being said, we could also extend our linear regression model to be a multiple linear regression model, to accommodate the different categories. Regarding the NA responses of the dataset, what could be done to improve the overall analysis would be to fill in missing values with estimated values based on other the responses. This would be beneficial for both analyzing trends of the data and generating linear regression models. Additionally, since we based our timeline of milestones for learning spoken languages on secondary research, providing data visualizations and a model to compare and contrast the development of visual languages with speech languages would enhance the analysis of this paper.
 
 \newpage
 
